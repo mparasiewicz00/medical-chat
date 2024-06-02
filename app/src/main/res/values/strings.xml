@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">medical-chat</string>
+    <string name="message_content">Message content</string>
+    <string name="sender">Sender</string>
+    <string name="image" type="">imageView</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="send">Send</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="back">Back</string>
+    <string name="user_email">User Email</string>
+    <string name="search">Search</string>
+    <string name="enter_user_email">Enter user email</string>
+    <string name="back_button" />
+</resources>

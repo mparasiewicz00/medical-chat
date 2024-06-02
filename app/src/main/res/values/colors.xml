@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="light_blue">#87CEFA</color>
+    <color name="blue">#4682B4</color>
+    <color name="dark_blue">#1E90FF</color>
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#FFFFFF</color>
+    <color name="colorPrimary">#4682B4</color> <!-- blue -->
+    <color name="colorPrimaryVariant">#4169E1</color> <!-- dark_blue -->
+    <color name="colorAccent">#87CEFA</color> <!-- light_blue -->
+    <color name="background_color">#F0F8FF</color> <!-- AliceBlue -->
+</resources>
+

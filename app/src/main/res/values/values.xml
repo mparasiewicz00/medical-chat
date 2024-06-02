@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">848666997081</string>
+    <string name="google_api_key" translatable="false">AIzaSyDWA3HdvcmQju7UW1PGeUIo7PDeD9RvToU</string>
+    <string name="google_app_id" translatable="false">1:848666997081:android:cc5e8bd7c2c00bafad1c48</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDWA3HdvcmQju7UW1PGeUIo7PDeD9RvToU</string>
+    <string name="google_storage_bucket" translatable="false">medical-chat-f02bd.appspot.com</string>
+    <string name="project_id" translatable="false">medical-chat-f02bd</string>
+</resources>

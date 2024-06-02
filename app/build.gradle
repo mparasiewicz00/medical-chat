@@ -1,0 +1,66 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+
+}
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+
+android {
+    namespace 'com.stmd.medical_chat'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.stmd.medical_chat"
+        minSdk 29
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+    implementation platform(libs.firebase.bom)
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    implementation libs.firebase.auth
+    implementation libs.firebase.firestore
+    implementation libs.firebase.storage
+    implementation libs.androidx.appcompat.v131
+    implementation libs.material.v140
+    implementation libs.androidx.constraintlayout.v210
+    implementation libs.androidx.activity
+    implementation libs.firebase.appcheck.playintegrity
+    implementation libs.firebase.ui.firestore
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit.v113
+    androidTestImplementation libs.androidx.espresso.core.v340
+    implementation libs.google.firebase.auth
+    implementation libs.google.firebase.firestore
+    implementation libs.google.firebase.storage
+    implementation libs.firebase.auth.v2103
+    implementation libs.firebase.database
+    implementation libs.glide
+    annotationProcessor libs.compiler
+
+
+}

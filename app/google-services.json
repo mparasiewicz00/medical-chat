@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "848666997081",
+    "firebase_url": "https://medical-chat-f02bd-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "medical-chat-f02bd",
+    "storage_bucket": "medical-chat-f02bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848666997081:android:cc5e8bd7c2c00bafad1c48",
+        "android_client_info": {
+          "package_name": "com.stmd.medical_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWA3HdvcmQju7UW1PGeUIo7PDeD9RvToU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

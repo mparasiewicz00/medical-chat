@@ -1,0 +1,65 @@
+[versions]
+agp = "8.4.1"
+androidxJunit = "1.1.5"
+appcompatVersion = "1.6.1"
+constraintlayoutVersion = "2.1.4"
+espressoCoreVersion = "3.5.1"
+firebaseAuth = "23.0.0"
+firebaseAuthVersion = "21.0.3"
+firebaseBom = "33.0.0"
+firebaseFirestore = "25.0.0"
+firebaseStorage = "21.0.0"
+firebaseUiFirestore = "8.0.2"
+glide = "4.16.0"
+googleServices = "4.4.1"
+googleWebrtc = "1.0.32006"
+kotlin = "1.9.0"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+lombok = "1.18.32"
+material = "1.12.0"
+activity = "1.9.0"
+constraintlayout = "2.1.4"
+materialVersion = "1.12.0"
+firebaseAppcheckPlayintegrity = "18.0.0"
+googleGmsGoogleServices = "4.4.1"
+
+[libraries]
+androidx-appcompat-v131 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+androidx-constraintlayout-v210 = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-espresso-core-v340 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+androidx-junit-v113 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version = "23.0.0" }
+firebase-auth-v2103 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-database = { module = "com.google.firebase:firebase-database", version.ref = "firebaseStorage" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version = "25.0.0" }
+firebase-storage = { module = "com.google.firebase:firebase-storage", version = "21.0.0" }
+firebase-ui-firestore = { module = "com.firebaseui:firebase-ui-firestore", version.ref = "firebaseUiFirestore" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
+google-firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+google-firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+google-webrtc = { module = "org.webrtc:google-webrtc", version.ref = "googleWebrtc" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+material-v140 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+firebase-appcheck-playintegrity = { group = "com.google.firebase", name = "firebase-appcheck-playintegrity", version.ref = "firebaseAppcheckPlayintegrity" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+
