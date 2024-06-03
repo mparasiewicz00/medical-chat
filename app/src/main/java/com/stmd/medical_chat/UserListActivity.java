@@ -64,15 +64,19 @@ public class UserListActivity extends AppCompatActivity {
     private void loadChatHistory() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            String currentUserEmailFormatted = formatEmailForDatabase(currentUser.getEmail());
+            Log.d(TAG, "Loading chat history for: " + currentUserEmailFormatted); // Logowanie formatowanego emaila
             DatabaseReference userChatsRef = FirebaseDatabase.getInstance()
                     .getReference("messages")
-                    .child(formatEmailForDatabase(currentUser.getEmail()));
+                    .child(currentUserEmailFormatted);
 
             userChatsRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     userList.clear();
+                    Log.d(TAG, "Chat history snapshot: " + snapshot); // Logowanie snapshotu
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        Log.d(TAG, "Found chat with: " + userSnapshot.getKey()); // Logowanie znalezionych kluczy
                         userList.add(formatEmailFromDatabase(userSnapshot.getKey()));
                     }
                     userAdapter.notifyDataSetChanged();
@@ -90,6 +94,7 @@ public class UserListActivity extends AppCompatActivity {
         String email = searchEditText.getText().toString().trim();
         if (!email.isEmpty()) {
             String emailFormatted = formatEmailForDatabase(email);
+            Log.d(TAG, "Searching for user with formatted email: " + emailFormatted); // Logowanie formatowanego emaila
             usersRef.child(emailFormatted).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
