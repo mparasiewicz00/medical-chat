@@ -15,4 +15,10 @@
         <item name="android:navigationBarColor">@color/blue</item>
         <item name="android:background">@color/white</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryVariant</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

@@ -1,5 +1,6 @@
 package com.stmd.medical_chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -33,6 +34,7 @@ public class UserListActivity extends AppCompatActivity {
     private List<String> userList;
     private DatabaseReference usersRef;
     private FirebaseAuth mAuth;
+    private String currentUserRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +44,10 @@ public class UserListActivity extends AppCompatActivity {
         searchEditText = findViewById(R.id.searchEditText);
         searchButton = findViewById(R.id.searchButton);
         userRecyclerView = findViewById(R.id.userRecyclerView);
+        Button logoutButton = findViewById(R.id.logoutButton);
 
         userList = new ArrayList<>();
-        userAdapter = new UserAdapter(userList, this);  // Przekazanie kontekstu
+        userAdapter = new UserAdapter(userList, this);
         userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         userRecyclerView.setAdapter(userAdapter);
 
@@ -56,16 +59,37 @@ public class UserListActivity extends AppCompatActivity {
         }
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
-        loadChatHistory();
-
+        loadUserRole(currentUser.getEmail());
         searchButton.setOnClickListener(v -> searchUser());
+
+        logoutButton.setOnClickListener(v -> {
+            mAuth.signOut();
+            Intent intent = new Intent(UserListActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void loadUserRole(String email) {
+        String emailFormatted = formatEmailForDatabase(email);
+        usersRef.child(emailFormatted).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentUserRole = snapshot.getValue(String.class);
+                loadChatHistory();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Error loading user role", error.toException());
+            }
+        });
     }
 
     private void loadChatHistory() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String currentUserEmailFormatted = formatEmailForDatabase(currentUser.getEmail());
-            Log.d(TAG, "Loading chat history for: " + currentUserEmailFormatted); // Logowanie formatowanego emaila
             DatabaseReference userChatsRef = FirebaseDatabase.getInstance()
                     .getReference("messages")
                     .child(currentUserEmailFormatted);
@@ -74,10 +98,12 @@ public class UserListActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     userList.clear();
-                    Log.d(TAG, "Chat history snapshot: " + snapshot); // Logowanie snapshotu
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        Log.d(TAG, "Found chat with: " + userSnapshot.getKey()); // Logowanie znalezionych kluczy
-                        userList.add(formatEmailFromDatabase(userSnapshot.getKey()));
+                        String chatPartner = formatEmailFromDatabase(userSnapshot.getKey());
+                        String userRole = snapshot.child("role").getValue(String.class);
+                        if (isCommunicationAllowed(userRole)) {
+                            userList.add(chatPartner);
+                        }
                     }
                     userAdapter.notifyDataSetChanged();
                 }
@@ -94,14 +120,18 @@ public class UserListActivity extends AppCompatActivity {
         String email = searchEditText.getText().toString().trim();
         if (!email.isEmpty()) {
             String emailFormatted = formatEmailForDatabase(email);
-            Log.d(TAG, "Searching for user with formatted email: " + emailFormatted); // Logowanie formatowanego emaila
             usersRef.child(emailFormatted).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        userList.clear();
-                        userList.add(email);
-                        userAdapter.notifyDataSetChanged();
+                        String userRole = snapshot.child("role").getValue(String.class);
+                        if (isCommunicationAllowed(userRole)) {
+                            userList.clear();
+                            userList.add(email);
+                            userAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(UserListActivity.this, "You cannot communicate with this user", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(UserListActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                     }
@@ -115,11 +145,15 @@ public class UserListActivity extends AppCompatActivity {
         }
     }
 
+    private boolean isCommunicationAllowed(String userRole) {
+        return userRole != null && ((currentUserRole.equals("doctor") && userRole.equals("patient")) || (currentUserRole.equals("patient") && userRole.equals("doctor")));
+    }
+
     private String formatEmailForDatabase(String email) {
-        return email.replace(".", "_").replace("@", "at");
+        return email.replace(".", "_").replace("@", "_at_");
     }
 
     private String formatEmailFromDatabase(String formattedEmail) {
-        return formattedEmail.replace("at", "@").replace("_", ".");
+        return formattedEmail.replace("_at_", "@").replace("_", ".");
     }
 }

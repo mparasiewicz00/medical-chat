@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     private ImageButton sendButton;
     private ImageButton chooseImageButton;
     private ImageButton backButton;
+    private Button logoutButton;
     private FirebaseAuth mAuth;
     private DatabaseReference messagesRef;
     private MessageAdapter messageAdapter;
@@ -72,7 +74,8 @@ public class ChatActivity extends AppCompatActivity {
         messageEditText = findViewById(R.id.messageEditText);
         sendButton = findViewById(R.id.sendButton);
         chooseImageButton = findViewById(R.id.chooseImageButton);
-        backButton = findViewById(R.id.backButton); // Dodaj przycisk "Back"
+        backButton = findViewById(R.id.backButton);
+        logoutButton = findViewById(R.id.logoutButton); // Dodaj przycisk "Logout"
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -92,7 +95,8 @@ public class ChatActivity extends AppCompatActivity {
 
         sendButton.setOnClickListener(v -> sendMessage());
         chooseImageButton.setOnClickListener(v -> chooseImage());
-        backButton.setOnClickListener(v -> onBackPressed()); // Dodaj obsługę przycisku "Back"
+        backButton.setOnClickListener(v -> onBackPressed());
+        logoutButton.setOnClickListener(v -> logout()); // Dodaj obsługę przycisku "Logout"
     }
 
     private void sendMessage() {
@@ -192,7 +196,14 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    private void logout() {
+        mAuth.signOut();
+        Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private String formatEmailForDatabase(String email) {
-        return email.replace(".", "_").replace("@", "at");
+        return email.replace(".", "_").replace("@", "_at_");
     }
 }

@@ -11,4 +11,10 @@
     <string name="search">Search</string>
     <string name="enter_user_email">Enter user email</string>
     <string name="back_button" />
+    <string-array name="specializations">
+        <item>Select Specialization</item>
+        <item>Internista</item>
+        <item>Kardiolog</item>
+        <item>Neurolog</item>
+    </string-array>
 </resources>

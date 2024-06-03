@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="userRecyclerView" type="id" />
+    <item name="peselEditText" type="id" />
+    <item name="pwzEditText" type="id" />
+    <item name="roleCheckBox" type="id" />
+    <item name="specializationSpinner" type="id" />
 </resources>

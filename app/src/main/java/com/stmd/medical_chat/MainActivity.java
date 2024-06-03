@@ -2,7 +2,6 @@ package com.stmd.medical_chat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,34 +36,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("users");
 
-        registerButton.setOnClickListener(v -> registerUser());
+        registerButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
+
         loginButton.setOnClickListener(v -> loginUser());
     }
-
-    private void registerUser() {
-        String email = emailEditText.getText().toString().trim();
-        String password = passwordEditText.getText().toString().trim();
-
-        if (!email.isEmpty() && !password.isEmpty()) {
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            if (user != null) {
-                                String emailFormatted = formatEmailForDatabase(email);
-                                Log.d("MainActivity", "Formatted Email: " + emailFormatted);
-                                usersRef.child(emailFormatted).setValue(user.getEmail());
-                                Toast.makeText(MainActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(MainActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        } else {
-            Toast.makeText(MainActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     private void loginUser() {
         String email = emailEditText.getText().toString().trim();
