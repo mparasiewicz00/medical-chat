@@ -27,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ChatActivity extends AppCompatActivity {
@@ -105,7 +106,7 @@ public class ChatActivity extends AppCompatActivity {
             FirebaseUser user = mAuth.getCurrentUser();
             if (user != null) {
                 Message msg = new Message(user.getEmail(), message);
-                String senderPath = formatEmailForDatabase(user.getEmail());
+                String senderPath = formatEmailForDatabase(Objects.requireNonNull(user.getEmail()));
                 String recipientPath = formatEmailForDatabase(recipientEmail);
 
                 messagesRef.push().setValue(msg).addOnSuccessListener(aVoid -> {
@@ -126,6 +127,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void loadMessages() {
         messagesRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 messageList.clear();
@@ -179,7 +181,7 @@ public class ChatActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             Message msg = new Message(user.getEmail(), imageUrl);
-            String senderPath = formatEmailForDatabase(user.getEmail());
+            String senderPath = formatEmailForDatabase(Objects.requireNonNull(user.getEmail()));
             String recipientPath = formatEmailForDatabase(recipientEmail);
 
             messagesRef.push().setValue(msg).addOnSuccessListener(aVoid -> {

@@ -1,5 +1,6 @@
 package com.stmd.medical_chat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserListActivity extends AppCompatActivity {
 
@@ -89,17 +91,18 @@ public class UserListActivity extends AppCompatActivity {
     private void loadChatHistory() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            String currentUserEmailFormatted = formatEmailForDatabase(currentUser.getEmail());
+            String currentUserEmailFormatted = formatEmailForDatabase(Objects.requireNonNull(currentUser.getEmail()));
             DatabaseReference userChatsRef = FirebaseDatabase.getInstance()
                     .getReference("messages")
                     .child(currentUserEmailFormatted);
 
             userChatsRef.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     userList.clear();
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String chatPartner = formatEmailFromDatabase(userSnapshot.getKey());
+                        String chatPartner = formatEmailFromDatabase(Objects.requireNonNull(userSnapshot.getKey()));
                         String userRole = snapshot.child("role").getValue(String.class);
                         if (isCommunicationAllowed(userRole)) {
                             userList.add(chatPartner);
@@ -121,6 +124,7 @@ public class UserListActivity extends AppCompatActivity {
         if (!email.isEmpty()) {
             String emailFormatted = formatEmailForDatabase(email);
             usersRef.child(emailFormatted).addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {

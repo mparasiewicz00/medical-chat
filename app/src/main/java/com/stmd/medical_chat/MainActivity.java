@@ -12,6 +12,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText emailEditText;
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(MainActivity.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Login failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {
